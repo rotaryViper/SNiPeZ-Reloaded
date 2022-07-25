@@ -17,3 +17,5 @@ You get infinite bullets, but watch out for the cost of bullets. They cost a lot
 
 Have fun :)
 Brandon
+
+UML Diagram: https://rotaryviper.github.io/SNiPeZ-Reloaded/
