@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href=style.css rel=stylesheet>
+
+        <meta name=viewport content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <c class=Title>
+            SNiPeZ Reloaded<br>UML Diagram<br><br>
+        </c>
+
+        <c class=Intro>
+            These are the objects in SNiPez Reloaded.
+        </c>
+
+        <hr>
+
+        <!--Objects-->
+        <c class=Box>
+            <a class=subBox>
+                <c class=subBoxTitleBig>Bullet</c>
+                <hr>
+                    <c class=subBoxTitle>Attributes</c>
+                    <br>
+                    img : pygame.Surface<br>
+                    rect : pygame.Rect<br>
+                    vector: pygame.math.Vector2
+                    <hr>
+                    <c class=subBoxTitle>Methods</c>
+                    <br>
+                    __init__(self : pygame.sprite.Sprite, img : pygame.Surface, initPos : Tuple(int, int), vel : int, vector : pygame.math.Vector2)<br>
+                    update(self : pygame.sprite.Sprite, enemyGroup : pygame.sprite.Group)
+            </a>
+            <a class=subBox>
+                <c class=subBoxTitleBig>EnemyStandard</c>
+                <hr>
+                    <c class=subBoxTitle>Attributes</c>
+                    <br>
+                    img : pygame.Surface<br>
+                    rect : pygame.Rect<br>
+                    vel: int
+                    <hr>
+                    <c class=subBoxTitle>Methods</c>
+                    <br>
+                    __init__(self : pygame.sprite.Sprite, img : pygame.Surface)<br>
+                    update(self : pygame.sprite.Sprite, player : pygame.sprite.Sprite)<br>
+                    initPos(self : pygame.sprite.Sprite)
+            </a>
+            <a class=subBox>
+                <c class=subBoxTitleBig>Player</c>
+                <hr>
+                    <c class=subBoxTitle>Attributes</c>
+                    <br>
+                    img : pygame.Surface<br>
+                    rect : pygame.Rect<br>
+                    vel : int<br>
+                    health: int
+                    <hr>
+                    <c class=subBoxTitle>Methods</c>
+                    <br>
+                    __init__(self : pygame.sprite.Sprite, img : pygame.Surface, vel : int, health: int)<br>
+                    update(self : pygame.sprite.Sprite, key : list[Boolean], enemyGroup: pygame.sprite.Group)
+            </a>
+            <a class=subBox>
+                <c class=subBoxTitleBig>SettingSlider</c>
+                <hr>
+                    <c class=subBoxTitle>Attributes</c>
+                    <br>
+                    bigRect : pygame.Rect<br>
+                    smallRect : pygame.Rect<br>
+                    initPos : (int,int)<br>
+                    value : float
+                    <hr>
+                    <c class=subBoxTitle>Methods</c>
+                    <br>
+                    __init__(self : pygame.sprite.Sprite, initPos : (int, int), value : int)<br>
+                    update(self : pygame.sprite.Sprite, mousePos : (int, int), mouseClick : list[Boolean])
+            </a>
+        </c>
+    </body>
+</html>
