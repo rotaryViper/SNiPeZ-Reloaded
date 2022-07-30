@@ -3,6 +3,9 @@
     <head>
         <link href=style.css rel=stylesheet>
 
+        <title>SNiPeZ Reloaded UML Diagram</title>
+        <meta name="description" content="UML Diagram of all the objects in SNiPeZ Reloaded.">
+
         <meta name=viewport content="width=device-width, initial-scale=1.0">
     </head>
 
@@ -15,6 +18,16 @@
             These are the objects in SNiPez Reloaded.
         </c>
 
+        <a class=Logo href=https://github.com/rotaryViper/SNiPeZ-Reloaded target=_blank rel="noopener noreferrer">
+            <img
+                src=logo.png
+                alt="SNiPeZ Reloaded Github"
+                decoding=async
+                loading=lazy
+                class=Logo
+            >
+        </a>
+
         <hr>
 
         <!--Objects-->
@@ -24,13 +37,14 @@
                 <hr>
                     <c class=subBoxTitle>Attributes</c>
                     <br>
+                    self : pygame.sprite.Sprite<br>
                     img : pygame.Surface<br>
                     rect : pygame.Rect<br>
                     vector: pygame.math.Vector2
                     <hr>
                     <c class=subBoxTitle>Methods</c>
                     <br>
-                    __init__(self : pygame.sprite.Sprite, img : pygame.Surface, initPos : Tuple(int, int), vel : int, vector : pygame.math.Vector2)<br>
+                    __init__(self : pygame.sprite.Sprite, img : pygame.Surface, initPos : tuple(int, int), vel : int, mousePos : tuple(int, int))<br>
                     update(self : pygame.sprite.Sprite, enemyGroup : pygame.sprite.Group)
             </a>
             <a class=subBox>
@@ -38,8 +52,9 @@
                 <hr>
                     <c class=subBoxTitle>Attributes</c>
                     <br>
+                    self : pygame.sprite.Sprite<br>
                     img : pygame.Surface<br>
-                    rect : pygame.Rect<br>
+                    rect : rect<br>
                     vel: int
                     <hr>
                     <c class=subBoxTitle>Methods</c>
@@ -53,6 +68,7 @@
                 <hr>
                     <c class=subBoxTitle>Attributes</c>
                     <br>
+                    self : pygame.sprite.Sprite<br>
                     img : pygame.Surface<br>
                     rect : pygame.Rect<br>
                     vel : int<br>
@@ -61,22 +77,23 @@
                     <c class=subBoxTitle>Methods</c>
                     <br>
                     __init__(self : pygame.sprite.Sprite, img : pygame.Surface, vel : int, health: int)<br>
-                    update(self : pygame.sprite.Sprite, key : list[Boolean], enemyGroup: pygame.sprite.Group)
+                    update(self : pygame.sprite.Sprite, key : pygame.key.ScancodeWrapper(bool*512), enemyGroup: pygame.sprite.Group)
             </a>
             <a class=subBox>
                 <c class=subBoxTitleBig>SettingSlider</c>
                 <hr>
                     <c class=subBoxTitle>Attributes</c>
                     <br>
+                    self : pygame.sprite.Sprite<br>
                     bigRect : pygame.Rect<br>
                     smallRect : pygame.Rect<br>
-                    initPos : (int,int)<br>
+                    initPos : tuple(int,int)<br>
                     value : float
                     <hr>
                     <c class=subBoxTitle>Methods</c>
                     <br>
-                    __init__(self : pygame.sprite.Sprite, initPos : (int, int), value : int)<br>
-                    update(self : pygame.sprite.Sprite, mousePos : (int, int), mouseClick : list[Boolean])
+                    __init__(self : pygame.sprite.Sprite, initPos : tuple(int, int), value : int)<br>
+                    update(self : pygame.sprite.Sprite, mousePos : tuple(int, int), mouseClick : tuple(bool,bool,bool))
             </a>
         </c>
     </body>
