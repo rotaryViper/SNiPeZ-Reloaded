@@ -1,5 +1,5 @@
 # Created: 22/6/2022
-# Last editted: 24/7/2022
+# Last editted: 30/7/2022
 # Developer highscore in endless classic: 14001
 '''
 Optimisations since v0.1
@@ -11,9 +11,11 @@ Recursion issue, so I will attempt to fix it
 Open a new background daemon thread to play audio
 Load all music as Sound because music can't fadeout very well
 Open site when area is clicked
+Added UML diagram
+Fixed the audio thread exit error
 
 ##### FIRST GAME BREAKING BUG ####
-Velocity may be 0
+Velocity may be (0,0), so I changed it to (1,1)
 '''
 import pygame,sys,os,random,threading,webbrowser,time
 
@@ -90,7 +92,8 @@ def gameMusic(vol):
             pygame.mixer.music.load(songDir)
 
             # Play song, and fade in for 3 seconds
-            pygame.mixer.music.play(fade_ms=3000)
+            try: pygame.mixer.music.play(fade_ms=3000)
+            except: pass # This only ever happens if sys.exit has been called
 
             # Find length of song, by converting it into a Sound object
             songSound = pygame.mixer.Sound(songDir)
@@ -126,7 +129,8 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = img.get_rect()
         self.rect.move_ip(initPos)
         self.vector = pygame.math.Vector2(mousePos[0]-self.rect.centerx,mousePos[1]-self.rect.centery)
-        self.vector.scale_to_length(vel)
+        # Limit bullet speed to bullet.vel
+        if self.vector != pygame.math.Vector2(0,0): self.vector.scale_to_length(vel)
 
     def update(self, enemyGroup):
         # Move bullet
@@ -160,25 +164,21 @@ class EnemyStandard(pygame.sprite.Sprite):
         self.img = img
         self.rect = img.get_rect()
         self.rect.move_ip(self.initPos())
+        # self.vel is set in the main game loop, so that enemies don't accidentally start moving.
     
     def update(self, player):
-        # Using a trusty try/except statement to ignore errors
-        try:
-            ## Movement
-            # Give enemy it's correct vector in relation to the player mouse
-            bulletMove=pygame.math.Vector2(int(player.rect.x-self.rect.x),int(player.rect.y-self.rect.y))
+        ## Movement
+        # Give enemy it's correct vector in relation to the player mouse
+        bulletMove=pygame.math.Vector2(int(player.rect.x-self.rect.x),int(player.rect.y-self.rect.y))
 
-            # Limit enemy speed to vel
-            bulletMove.scale_to_length(self.vel)
+        # Limit enemy speed to vel
+        if bulletMove != pygame.math.Vector2(0,0): bulletMove.scale_to_length(self.vel)
 
-            # Move enemy
-            self.rect = self.rect.move(bulletMove)
+        # Move enemy
+        self.rect = self.rect.move(bulletMove)
 
-            # Render enemy
-            SCREEN.blit(self.img, self.rect)
-
-        except:
-            pass
+        # Render enemy
+        SCREEN.blit(self.img, self.rect)
 
     def initPos(self):
         # Pick which wall to use
@@ -227,9 +227,8 @@ class Player(pygame.sprite.Sprite):
         if right == True and self.rect.right < SCREENW:
             playerMove[0] += self.vel
 
-        # Limit bullet speed to bullet.vel
-        try:playerMove.scale_to_length(self.vel)
-        except:pass
+        # Only scale player movement vector if player actually moves
+        if playerMove != pygame.math.Vector2(0,0): playerMove.scale_to_length(self.vel)
 
         # Move player
         self.rect = self.rect.move(playerMove)
@@ -297,7 +296,8 @@ def initFrame():
     mouseClick = pygame.mouse.get_pressed()
     mousePos = pygame.mouse.get_pos()
     # Global exit function
-    if key[pygame.K_0] == True: sys.exit()
+    if key[pygame.K_0] == True:
+        sys.exit()
 
     return events, key, mouseClick, mousePos
 ##END## Utility Functions
@@ -377,6 +377,11 @@ def credits():
         COMICSANS.render(f'Made by: github.com/rotaryviper', True, 'white'),
         ((SCREENW/2)-(txt.get_width()/2),3*(SCREENH/8))
     )
+    # Print creator
+    SCREEN.blit(
+        COMICSANS.render(f'UML Diagram: https://rotaryviper.github.io/SNiPeZ-Reloaded/', True, 'white'),
+        ((SCREENW/2)-(txt.get_width()/2),6*(SCREENH/8))
+    )
 
     # Main loop
     while True:
@@ -399,6 +404,11 @@ def credits():
         # Beta tester
         if (mousePos[1] > 5*(SCREENH/8)  and mousePos[1] < (5*(SCREENH/8)+FONTSIZE) and any(mouseClick)) == True:
             openLink('https://www.twitch.tv/suavereeee')
+            return 'credits()'
+
+        # Beta tester
+        if (mousePos[1] > 6*(SCREENH/8)  and mousePos[1] < (6*(SCREENH/8)+FONTSIZE) and any(mouseClick)) == True:
+            openLink('https://rotaryviper.github.io/SNiPeZ-Reloaded/')
             return 'credits()'
 
         pygame.display.flip()
